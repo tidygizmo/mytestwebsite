@@ -1,11 +1,14 @@
 install:
+- pip install --user awscli
 - wget 
 - sudo dpkg -i hugo *.deb 
 - hugo version 
 before_script: 
-- rm -rf public 
-script: 
+- rm -rf public
 - hugo 
+script: 
+- aws s3 sync public/ s3://tidygizmo.com --acl public-read --delete
+- aws cloudfront create-invalidation --distribution-id E19V080568NT7V --paths '/*'
 branches: 
  only:
  - master
