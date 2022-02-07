@@ -1,12 +1,12 @@
 install:
 - pip install --user awscli
-- wget 
+- wget https://github.com/gohugoio/hugo/releases/download/v0.92.1/hugo_0.92.1_Linux-64bit.deb
 - sudo dpkg -i hugo *.deb 
 - hugo version 
 before_script: 
 - rm -rf public
-- hugo 
 script: 
+- hugo 
 - aws s3 sync public/ s3://tidygizmo.com --acl public-read --delete
 - aws cloudfront create-invalidation --distribution-id E19V080568NT7V --paths '/*'
 branches: 
